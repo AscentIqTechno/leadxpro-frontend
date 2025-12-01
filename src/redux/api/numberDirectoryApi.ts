@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_API_URL as string;
 export const numberDirectoryApi = createApi({
   reducerPath: "numberDirectoryApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}/api/api/number_directory`,
+    baseUrl: `${BASE_URL}/api/number_directory`,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as any)?.auth?.token;
       if (token) headers.set("x-access-token", token);
