@@ -26,6 +26,9 @@ yarn dev
 pnpm dev
 # or
 bun dev
+
+
+deploy netlify deploy --prod
 ```
 
 ## Author 
