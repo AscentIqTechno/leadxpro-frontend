@@ -1,7 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { openSignup } from '@/redux/slices/modelSlice'; // ✅ Correct import
+import { useDispatch } from 'react-redux';
 
 const CTA = () => {
+  const dispatch = useDispatch();
+
+  const handleStartFreeTrial = () => {
+    dispatch(openSignup()); // Open signup modal via Redux
+  };
   return (
     <section className="py-24 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
       {/* Background Elements */}
@@ -29,19 +36,14 @@ const CTA = () => {
             style={{ animationDelay: '0.4s' }}
           >
             <Button 
+             onClick={handleStartFreeTrial}
               size="lg" 
               className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-8 py-6"
             >
               Start Free Trial
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-white/20 text-white hover:bg-white/5 py-6"
-            >
-              Configure Gateway
-            </Button>
+           
           </div>
           <p
             className="mt-6 text-sm text-gray-400 animate-fade-in"

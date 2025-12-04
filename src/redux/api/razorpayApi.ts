@@ -30,7 +30,7 @@ export const razorpayApi = createApi({
 
     // 🔹 Get ACTIVE Razorpay config
     getActiveRazorpay: builder.query({
-      query: () => "/razorpay/config-active", // <-- FIX
+      query: () => "/razorpay/config-active-public", // <-- FIX
     }),
 
     // 🔹 Create new Razorpay Config

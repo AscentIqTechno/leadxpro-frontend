@@ -1,5 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./api/apiSlice";
+
+import modalReducer from "./slices/modelSlice"; // only default export
+import authReducer from "./slices/authSlice";
+
 import { authApi } from "./api/authApi";
 import { smsApi } from "./api/smsApi";
 import { smtpApi } from "./api/smtpApi";
@@ -10,16 +14,14 @@ import { numberDirectoryApi } from "./api/numberDirectoryApi";
 import { paymentApi } from "./api/paymentApi";
 import { planApi } from "./api/planApi";
 import { dashboardApi } from "./api/dashboardApi";
-import { razorpayApi } from "./api/razorpayApi"; // ✅ NEW IMPORT
-import { profileApi } from"./api/profileApi"
-
-import authReducer from "./slices/authSlice";
+import { razorpayApi } from "./api/razorpayApi";
+import { profileApi } from "./api/profileApi";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    modal: modalReducer,
 
-    // API Reducers
     [apiSlice.reducerPath]: apiSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [smtpApi.reducerPath]: smtpApi.reducer,
@@ -31,10 +33,9 @@ export const store = configureStore({
     [paymentApi.reducerPath]: paymentApi.reducer,
     [planApi.reducerPath]: planApi.reducer,
     [dashboardApi.reducerPath]: dashboardApi.reducer,
-    [razorpayApi.reducerPath]: razorpayApi.reducer, // ✅ ADDED HERE
-    [profileApi.reducerPath]:profileApi.reducer,
+    [razorpayApi.reducerPath]: razorpayApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
   },
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(apiSlice.middleware)
@@ -49,5 +50,5 @@ export const store = configureStore({
       .concat(planApi.middleware)
       .concat(dashboardApi.middleware)
       .concat(razorpayApi.middleware)
-      .concat(profileApi.middleware)
+      .concat(profileApi.middleware),
 });

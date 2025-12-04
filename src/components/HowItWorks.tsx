@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { steps } from "../data/howItWorks";
+import { useDispatch } from "react-redux";
+import { openSignup } from "@/redux/slices/modelSlice";
 
 const HowItWorks = () => {
+   const dispatch = useDispatch();
+
+  const handleStartFreeTrial = () => {
+    dispatch(openSignup()); // Open signup modal via Redux
+  };
   return (
     <section id="how-it-works" className="py-24 bg-gradient-to-b from-black to-gray-900">
       <div className="container mx-auto px-4">
@@ -40,6 +47,7 @@ const HowItWorks = () => {
         {/* CTA */}
         <div className="mt-16 text-center">
           <Button
+            onClick={handleStartFreeTrial}
             size="lg"
             className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-8"
           >

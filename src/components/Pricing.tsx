@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { useGetPlansQuery } from "@/redux/api/planApi";
+import { useDispatch } from "react-redux";
+import { openSignup } from "@/redux/slices/modelSlice";
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+ const dispatch = useDispatch();
 
+  const handleStartFreeTrial = () => {
+    dispatch(openSignup()); // Open signup modal via Redux
+  };
   // Fetch dynamic plans
   const { data: planResponse, isLoading } = useGetPlansQuery(null);
   const [pricingPlans, setPricingPlans] = useState<any[]>([]);
@@ -16,8 +22,8 @@ const Pricing = () => {
       const transformed = planResponse.data.map((p: any) => ({
         name: p.name,
         price: {
-          monthly: p.interval === "month" ? `₹${p.price / 100}` : "₹0",
-          annual: p.interval === "year" ? `₹${p.price / 100}` : "₹0",
+          monthly: p.interval === "month" ? `₹${p.price}` : "₹0",
+          annual: p.interval === "year" ? `₹${p.price}` : "₹0",
         },
         description: p.description,
         features: p.features || [],
@@ -111,6 +117,7 @@ const Pricing = () => {
                 <p className="text-gray-400 mb-6">{plan.description}</p>
 
                 <Button
+                  onClick={handleStartFreeTrial}
                   className={`w-full mb-6 ${
                     plan.highlighted
                       ? "bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold"

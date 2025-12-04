@@ -54,7 +54,7 @@ const planUtils = {
   formatPrice: (plan: Plan): string => {
     if (plan.price === 0) return 'Free';
 
-    const formattedPrice = (plan.price / 100).toLocaleString('en-IN', {
+    const formattedPrice = (plan.price).toLocaleString('en-IN', {
       minimumFractionDigits: 0,
       maximumFractionDigits: 2
     });

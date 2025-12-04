@@ -30,17 +30,17 @@ interface Plan {
 
 const BillingPage = () => {
   const user = useSelector((state: any) => state.auth?.user || {});
-  
+
   // Fetch plans
   const { data: planResponse, isLoading: loadingPlans } = useGetPlansQuery(null);
-  
+
   // Fetch active Razorpay config dynamically
-  const { 
-    data: razorpayConfig, 
+  const {
+    data: razorpayConfig,
     isLoading: loadingRazorpayConfig,
-    error: razorpayConfigError 
+    error: razorpayConfigError
   } = useGetActiveRazorpayQuery(null);
-  
+
   const [plans, setPlans] = useState<Plan[]>([]);
   const [razorpayKey, setRazorpayKey] = useState<string>("");
 
@@ -49,7 +49,9 @@ const BillingPage = () => {
 
   useEffect(() => {
     if (planResponse?.success && Array.isArray(planResponse.data)) {
-      const filtered = planResponse.data.filter((p: Plan) => p.price >= 0);
+      const filtered = planResponse.data.filter(
+        (p) => p.name.toLowerCase() !== "starter"
+      );
       setPlans(filtered);
     }
   }, [planResponse]);
@@ -62,13 +64,11 @@ const BillingPage = () => {
 
   // Format price based on currency
   const formatPrice = (price: number, currency: string) => {
-    const amount = currency === "INR" ? price / 100 : price / 100;
-    return new Intl.NumberFormat(currency === "INR" ? "en-IN" : "en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency,
       minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }).format(amount);
+    }).format(price);
   };
 
   const loadRazorpayScript = () => {
@@ -105,7 +105,7 @@ const BillingPage = () => {
       }).unwrap();
 
       if (!result.success) throw new Error(result.message);
-      
+
       await loadRazorpayScript();
       openRazorpayCheckout(result.data, plan);
     } catch (err: any) {
@@ -153,9 +153,9 @@ const BillingPage = () => {
       },
 
       theme: { color: "#F59E0B" },
-      
+
       modal: {
-        ondismiss: function() {
+        ondismiss: function () {
           toast.error("Payment cancelled");
         }
       }
@@ -167,11 +167,11 @@ const BillingPage = () => {
 
   const handleFreeSubscription = async (plan: Plan) => {
     try {
-      const result = await verifyPayment({ 
-        planId: plan._id, 
-        isFree: true 
+      const result = await verifyPayment({
+        planId: plan._id,
+        isFree: true
       }).unwrap();
-      
+
       if (result.success) toast.success("Free plan activated successfully!");
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to activate free plan");
@@ -205,20 +205,10 @@ const BillingPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans.map((plan) => (
-            <Card
-              key={plan._id}
-              className={`bg-gray-800 border border-gray-700 hover:border-yellow-500 transition ${
-                plan.isPopular ? 'ring-2 ring-yellow-500' : ''
-              }`}
-            >
+            <Card key={plan._id} className="bg-gray-800 border border-gray-700 hover:border-yellow-500 transition">
               <CardHeader className="text-center">
-                {plan.isPopular && (
-                  <Badge className="bg-yellow-500 text-gray-900 mb-2 mx-auto">
-                    Most Popular
-                  </Badge>
-                )}
                 <CardTitle className="text-white text-2xl">{plan.name}</CardTitle>
                 <p className="text-yellow-400 text-3xl font-bold mt-3">
                   {formatPrice(plan.price, plan.currency)}/{plan.interval}
@@ -237,19 +227,15 @@ const BillingPage = () => {
 
                 <Button
                   onClick={() => handleSubscribe(plan)}
-                  disabled={creatingOrder || verifyingPayment || (!razorpayKey && plan.price > 0)}
-                  className={`w-full ${
-                    plan.isPopular 
-                      ? 'bg-yellow-500 text-gray-900 hover:bg-yellow-600' 
-                      : 'bg-gray-700 text-white hover:bg-gray-600'
-                  }`}
+                  className="w-full bg-gray-700 text-white hover:bg-gray-600"
                 >
-                  {creatingOrder || verifyingPayment ? "Processing..." : "Subscribe Now"}
+                  Subscribe Now
                 </Button>
               </CardContent>
             </Card>
           ))}
         </div>
+
       </div>
     </div>
   );
