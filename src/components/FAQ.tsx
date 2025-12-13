@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from "@/components/ui/accordion";
+import { Link } from 'react-router-dom';
 
 const faqItems = [
   {
@@ -91,9 +92,9 @@ const FAQ = () => {
           <p className="text-gray-400 mb-4">
             Still have questions? We're here to help.
           </p>
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-6 py-3 rounded-lg transition-colors">
+          <Link to="/contact-us"><button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-6 py-3 rounded-lg transition-colors">
             Contact Support
-          </button>
+          </button></Link>
         </div>
       </div>
     </section>

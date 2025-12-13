@@ -15,7 +15,8 @@ import {
   Smartphone,
   CreditCard,
   FileText,
-  Wallet
+  Wallet,
+  FileText as InquiryIcon
 } from "lucide-react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
@@ -28,6 +29,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const [openEmail, setOpenEmail] = useState(true);
   const [openSms, setOpenSms] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
+  const [openInquiry, setOpenInquiry] = useState(false); // NEW STATE
 
   return (
     <>
@@ -75,8 +77,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <span>Dashboard Overview</span>
           </Link>
 
-          {/* ❌ REMOVED DELIVERY ANALYTICS */}
-
           {/* Billing & Payments */}
           <Link
             to="/dashboard/payment_billing"
@@ -108,7 +108,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             </Link>
           )}
 
-          {/* Email Section (Everyone) */}
+          {/* Email Section */}
           <div className="mt-3">
             <button
               className="flex items-center justify-between w-full px-4 py-3 text-left rounded-lg transition-all duration-200 hover:bg-gray-800 group"
@@ -226,7 +226,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             )}
           </div>
 
-          {/* SETTINGS — ADMIN ONLY */}
+          {/* ADMIN ONLY – SETTINGS */}
           {isAdmin && (
             <div className="mt-3">
               <button
@@ -270,6 +270,42 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   >
                     <Wallet size={14} />
                     Razorpay Configuration
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ADMIN ONLY – INQUIRY CONTACTS */}
+          {isAdmin && (
+            <div className="mt-3">
+              <button
+                className="flex items-center justify-between w-full px-4 py-3 text-left rounded-lg transition-all duration-200 hover:bg-gray-800 group"
+                onClick={() => setOpenInquiry(!openInquiry)}
+              >
+                <span className="flex items-center gap-3 text-gray-300 group-hover:text-white font-medium">
+                  <InquiryIcon size={18} /> Inquiry Contacts
+                </span>
+                {openInquiry ? 
+                  <ChevronDown size={16} className="text-gray-400 group-hover:text-white" /> : 
+                  <ChevronRight size={16} className="text-gray-400 group-hover:text-white" />
+                }
+              </button>
+
+              {openInquiry && (
+                <div className="ml-6 mt-2 space-y-1 border-l-2 border-gray-700 pl-3">
+                  <Link
+                    to="/dashboard/inquiry-contacts"
+                    className={clsx(
+                      "flex items-center gap-2 text-sm px-3 py-2 rounded-md transition-all duration-200",
+                      location.pathname.includes("/inquiry_contacts")
+                        ? "bg-yellow-500 text-gray-900 font-medium shadow-sm"
+                        : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                    )}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FileText size={14} />
+                    List & Delete
                   </Link>
                 </div>
               )}

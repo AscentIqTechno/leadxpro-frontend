@@ -16,6 +16,7 @@ import { planApi } from "./api/planApi";
 import { dashboardApi } from "./api/dashboardApi";
 import { razorpayApi } from "./api/razorpayApi";
 import { profileApi } from "./api/profileApi";
+import {contactApi} from"./api/contactApi";
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ export const store = configureStore({
     [dashboardApi.reducerPath]: dashboardApi.reducer,
     [razorpayApi.reducerPath]: razorpayApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [contactApi.reducerPath]:contactApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -50,5 +52,6 @@ export const store = configureStore({
       .concat(planApi.middleware)
       .concat(dashboardApi.middleware)
       .concat(razorpayApi.middleware)
-      .concat(profileApi.middleware),
+      .concat(profileApi.middleware)
+      .concat(contactApi.middleware)
 });

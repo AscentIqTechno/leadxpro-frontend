@@ -1,4 +1,5 @@
 import { Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -68,11 +69,10 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-medium mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><a href="#!" className="text-gray-400 hover:text-yellow-500 transition-colors">About Us</a></li>
-              <li><a href="#!" className="text-gray-400 hover:text-yellow-500 transition-colors">Careers</a></li>
-              <li><a href="#!" className="text-gray-400 hover:text-yellow-500 transition-colors">Contact</a></li>
-              <li><a href="#!" className="text-gray-400 hover:text-yellow-500 transition-colors">Privacy Policy</a></li>
-              <li><a href="#!" className="text-gray-400 hover:text-yellow-500 transition-colors">Terms of Service</a></li>
+              <li><Link to="/about-us" className="text-gray-400 hover:text-yellow-500 transition-colors">About Us</Link></li>
+              <li><Link to="/contact-us" className="text-gray-400 hover:text-yellow-500 transition-colors">Contact</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-400 hover:text-yellow-500 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="text-gray-400 hover:text-yellow-500 transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
@@ -83,8 +83,8 @@ const Footer = () => {
             © {currentYear} <span className="text-white font-semibold">LeadReachXpro</span>. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a href="#!" className="text-gray-400 hover:text-yellow-500 text-sm transition-colors">Terms</a>
-            <a href="#!" className="text-gray-400 hover:text-yellow-500 text-sm transition-colors">Privacy</a>
+            <Link to="/terms-of-service" className="text-gray-400 hover:text-yellow-500 text-sm transition-colors">Terms</Link>
+            <Link to="/privacy-policy" className="text-gray-400 hover:text-yellow-500 text-sm transition-colors">Privacy</Link>
             <a href="#!" className="text-gray-400 hover:text-yellow-500 text-sm transition-colors">Cookies</a>
           </div>
         </div>

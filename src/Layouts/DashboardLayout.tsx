@@ -28,32 +28,36 @@ const DashboardLayout = () => {
     }
   };
 
-  // Convert URL to a readable page title dynamically
-  const getPageTitle = (path: string) => {
-    // SMS pages
-    if (path.includes("/sms_directory")) return "SMS Number Directory";
-    if (path.includes("/sms_config")) return "SMS Gateway Configuration";
-    if (path.includes("/sms_campaigns")) return "SMS Campaigns";
+// Convert URL to a readable page title dynamically
+const getPageTitle = (path: string) => {
+  // SMS pages
+  if (path.includes("/sms_directory")) return "SMS Number Directory";
+  if (path.includes("/sms_config")) return "SMS Gateway Configuration";
+  if (path.includes("/sms_campaigns")) return "SMS Campaigns";
 
-    // Email pages
-    if (path.includes("/smtp")) return "SMTP Configuration";
-    if (path.includes("/users")) return "Manage Users";
-    if (path.includes("/campaigns")) return "Email Campaigns";
-    if (path.includes("/leads")) return "Leads Management";
-    if (path.includes("/email_directory")) return "Email Directory";
+  // Email pages
+  if (path.includes("/smtp")) return "SMTP Configuration";
+  if (path.includes("/users")) return "Manage Users";
+  if (path.includes("/campaigns")) return "Email Campaigns";
+  if (path.includes("/leads")) return "Leads Management";
+  if (path.includes("/email_directory")) return "Email Directory";
 
-    // ⭐ Billing & Settings (Missing earlier — now added)
-    if (path.includes("/payment_billing")) return "Billing & Payments";
-    if (path.includes("/plan_management")) return "Plan Management";
-    if (path.includes("/razorpay_config")) return "Razorpay Configuration";
-    if (path.includes("/user_profile")) return "User Profile"
+  // Billing & Settings
+  if (path.includes("/payment_billing")) return "Billing & Payments";
+  if (path.includes("/plan_management")) return "Plan Management";
+  if (path.includes("/razorpay_config")) return "Razorpay Configuration";
+  if (path.includes("/user_profile")) return "User Profile";
 
-    // Dashboard overview
-    if (path === "/dashboard" || path.includes("/overview"))
-      return "Dashboard Overview";
+  // Admin – Inquiry Contacts
+  if (path.includes("/inquiry_contacts")) return "Inquiry Contacts";
 
-    return "Dashboard";
-  };
+  // Dashboard overview
+  if (path === "/dashboard" || path.includes("/overview"))
+    return "Dashboard Overview";
+
+  return "Dashboard";
+};
+
 
 
   // Current dynamic title
